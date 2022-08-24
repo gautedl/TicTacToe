@@ -29,6 +29,10 @@ const Player = (name, value) => {
   return { getName, getValue };
 };
 
+const displayController = (() => {})();
+
+const gameLogic = () => {};
+
 const player1 = Player("Frank", "x");
 const player2 = Player("Trym", "o");
 

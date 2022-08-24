@@ -1,0 +1,43 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+}
+
+.background-screen {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 800px;
+    height: 700px;
+}
+
+.game-board {
+    width: 450px;
+    height: 450px;
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+
+.game-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-auto-flow: column;
+    align-items: center;
+    justify-items: center;
+   
+    width: 450px;
+    height: 450px;
+}
+
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: lightgray;
+    height: 90%;
+    width: 90%;
+}
