@@ -1,22 +1,22 @@
 const Gameboard = (() => {
   let gameboard = [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
   ];
 
   const getGameboard = () => gameboard;
 
   const resetGameboard = () =>
     (gameboard = [
-      ["1", "2", "3"],
-      ["4", "5", "6"],
-      ["7", "8", "9"],
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
     ]);
 
   //Sets the value of the field in the gameboard
-  const setValue = (i, j, val) => {
-    gameboard[i][j] = val;
+  const setValue = (x, y, val) => {
+    gameboard[x][y] = val;
   };
 
   return { getGameboard, resetGameboard, setValue };
@@ -29,21 +29,59 @@ const Player = (name, value) => {
   return { getName, getValue };
 };
 
-const displayController = (() => {})();
+const displayController = (() => {
+  // Populates the Gameboard with the correct values
+  const populateGameboard = (div, x, y, value) => {
+    div.textContent = value;
+    Gameboard.setValue(x, y, value);
+  };
+
+  return { populateGameboard };
+})();
 
 const gameLogic = (() => {
-  const player1 = Player("Frank", "x");
-  const player2 = Player("Trym", "o");
+  const gameboard = Gameboard.getGameboard();
+  const player1 = Player("Frank", "X");
+  const player2 = Player("Trym", "O");
+  let gameValue = "X"; // value X will always start
+  let player2Turn = false;
+  let dataX;
+  let dataY;
 
+  // Places the value of the player who's turn it is in the tile.
   const selectTile = () =>
     document.querySelectorAll(".tile").forEach((item) => {
       item.addEventListener("click", function (e) {
-        console.log(e.target);
+        dataX = e.target.dataset.x; // Finds the x value
+        dataY = e.target.dataset.y; // Finds the y value
+
+        // Checks if the tile is already marked
+        if (
+          gameboard[dataX][dataY] === "X" ||
+          gameboard[dataX][dataY] === "O"
+        ) {
+          return;
+        } else {
+          displayController.populateGameboard(item, dataX, dataY, gameValue);
+          playerTurn();
+        }
+
+        console.log(Gameboard.getGameboard());
       });
     });
+
+  // Logic for switching turns
+  const playerTurn = () => {
+    if (player2Turn) {
+      gameValue = player1.getValue();
+      player2Turn = !player2Turn;
+    } else {
+      gameValue = player2.getValue();
+      player2Turn = !player2Turn;
+    }
+  };
 
   return { selectTile };
 })();
 
-console.log(Gameboard.getGameboard());
 gameLogic.selectTile();
