@@ -44,4 +44,15 @@ html {
     height: 90%;
     width: 90%;
     font-size: 100px;
+    transition: 0.3s;
+}
+
+.tile:hover {
+    cursor: pointer;
+    background-color: rgba(189, 189, 189, 0.774);
+}
+
+.players-turn {
+    display: flex;
+    gap: 20px;
 }
