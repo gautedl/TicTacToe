@@ -31,10 +31,19 @@ const Player = (name, value) => {
 
 const displayController = (() => {})();
 
-const gameLogic = () => {};
+const gameLogic = (() => {
+  const player1 = Player("Frank", "x");
+  const player2 = Player("Trym", "o");
 
-const player1 = Player("Frank", "x");
-const player2 = Player("Trym", "o");
+  const selectTile = () =>
+    document.querySelectorAll(".tile").forEach((item) => {
+      item.addEventListener("click", function (e) {
+        console.log(e.target);
+      });
+    });
 
-console.log(Gameboard.setValue(1, 1, player1.getValue()));
+  return { selectTile };
+})();
+
 console.log(Gameboard.getGameboard());
+gameLogic.selectTile();
