@@ -11,6 +11,27 @@
     <div class="game-container">
         <div class="background-screen">
             <p class="header">Tic Tac Toe</p>
+
+            <div class="start-screen">
+              <form action="names">
+                <div class="players">
+                  <div class="player-1">
+                    <div class="name-value"><p class="name-title">Player 1 </p><p class="value"> X</p></div>
+                    <input class="inputs" type="text" name="player1" id="player1" placeholder="Choose name" required>
+                  </div>
+                  <div class="player-2">
+                    <div class="name-value"><p class="name-title">Player 2 </p><p class="value"> O</p></div>
+                    <input class="inputs" type="text" name="player2" id="player2" placeholder="Choose name" required>
+                  </div>
+                </div>
+                <div class="start-buttons">
+                  <button class="submitbtn pulse-on-hover" type="submit">Start Game</button>
+                </div>
+              </form>
+            </div>
+
+
+
             <div class="game-screen">
               <div class="players-turn"><p class="player-turn"><p class="player-value"></p></p></div>
                 
@@ -28,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            <div class="winning-screen"></div>
         </div>
     </div>
     <script src="app.js"></script>

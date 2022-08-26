@@ -1,8 +1,8 @@
 const Gameboard = (() => {
   let gameboard = [
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
   ];
 
   const getGameboard = () => gameboard;
@@ -44,11 +44,13 @@ const gameLogic = (() => {
   let valueP = document.querySelector(".player-value");
   const gameboard = Gameboard.getGameboard();
   const player1 = Player("Frank", "X");
-  const player2 = Player("Trym", "O");
+  const player2 = Player("trym", "O");
+
   let gameValue = "X"; // value X will always start
   let player2Turn = false;
   let dataX;
   let dataY;
+  let numberOfRounds = 0;
 
   // Places the value of the player who's turn it is in the tile.
   const selectTile = () =>
@@ -67,6 +69,7 @@ const gameLogic = (() => {
           displayController.populateGameboard(item, dataX, dataY, gameValue);
           playerTurn();
         }
+        numberOfRounds++;
 
         checkForWin();
       });
@@ -87,10 +90,29 @@ const gameLogic = (() => {
     }
   };
 
+  // NEEDS LOGIC FOR FETCHING CORRECT PLAYER
   const checkForWin = () => {
-    winLogic.checkDiagonal();
-    winLogic.checkRows();
-    winLogic.checkColumns();
+    if (numberOfRounds === 9) {
+      console.log("Tie");
+    }
+
+    if (winLogic.checkDiagonal() === "X") {
+      console.log(player1.getName());
+    } else if (winLogic.checkDiagonal() === "O") {
+      console.log(player2.getName());
+    }
+
+    if (winLogic.checkRows() === "X") {
+      console.log(player1.getName());
+    } else if (winLogic.checkRows() === "O") {
+      console.log(player2.getName());
+    }
+
+    if (winLogic.checkColumns() === "X") {
+      console.log(player1.getName());
+    } else if (winLogic.checkColumns() === "O") {
+      console.log(player2.getName());
+    }
   };
 
   return { selectTile };
@@ -98,8 +120,6 @@ const gameLogic = (() => {
 
 const winLogic = (() => {
   const gameboard = Gameboard.getGameboard();
-  const player1 = Player("Frank", "X");
-  const player2 = Player("Trym", "O");
 
   // Checks if diagonal has winning conditions
   const checkDiagonal = () => {
@@ -109,12 +129,12 @@ const winLogic = (() => {
       diagonal1.every((tile) => tile === "X") ||
       diagonal2.every((tile) => tile === "X")
     ) {
-      return player1.getName();
+      return "X";
     } else if (
       diagonal1.every((tile) => tile === "O") ||
       diagonal2.every((tile) => tile === "O")
     ) {
-      return player2.getName();
+      return "O";
     }
   };
 
@@ -122,9 +142,9 @@ const winLogic = (() => {
   const checkRows = () => {
     for (let i = 0; i < 3; i++) {
       if (gameboard[i].every((tile) => tile === "X")) {
-        return player1.getName();
+        return "X";
       } else if (gameboard[i].every((tile) => tile === "O")) {
-        return player2.getName();
+        return "O";
       }
     }
   };
@@ -135,9 +155,9 @@ const winLogic = (() => {
 
     for (let i = 0; i < 3; i++) {
       if (transposedGameboard[i].every((tile) => tile === "X")) {
-        return player1.getName();
+        return "X";
       } else if (transposedGameboard[i].every((tile) => tile === "O")) {
-        return player2.getName();
+        return "O";
       }
     }
   };

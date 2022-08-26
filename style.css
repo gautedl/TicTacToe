@@ -21,7 +21,14 @@ html {
     width: 450px;
     height: 450px;
     background-color: rgba(0, 0, 0, 0.3);
+}
 
+.game-screen {
+    display: none;
+}
+
+.game-screen, .active {
+   
 }
 
 .game-tiles {
@@ -33,6 +40,7 @@ html {
     justify-items: center;
     width: 450px;
     height: 450px;
+    display: none;
 }
 
 .tile {
@@ -52,7 +60,124 @@ html {
     background-color: rgba(189, 189, 189, 0.774);
 }
 
+
+
 .players-turn {
     display: flex;
     gap: 20px;
 }
+
+.header {
+    font-size: 40px;
+    font-weight: bolder;
+    color: #5b305a;
+    text-shadow: #e04b5a 4px 4px;
+    letter-spacing: 5px;
+}
+
+
+.players {
+    display: flex;
+    gap: 150px;
+    margin-top: 20px;
+    margin-bottom: 170px;
+
+}
+
+.player-1, .player-1 {
+    justify-content: center;
+}
+
+.player-1 > .name-value {
+    color: #e49756;
+    text-shadow: #e04b5a 2px 2px;
+}
+
+.player-2 > .name-value {
+    color: #9a4c68;
+    text-shadow: #e04b5a 2px 2px;
+}
+
+.start-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.name-value {
+    display: flex;
+    margin: 0px 15px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.value {
+    font-size: 34px;
+}
+
+.inputs {
+    outline: none;
+    width: 30vh; 
+    height: 30px;
+    border-radius: 4px;
+    font-size: 22px;
+    border: #E5E7EB solid 2px;
+}
+
+.player-1 > .inputs:focus {
+    border: #e49756 solid 2px;
+    background-color: rgba(224, 75, 90, 0.5);
+}
+
+.player-2 > .inputs:focus {
+    border: #9a4c68 solid 2px;
+    background-color:rgba(224, 75, 90, 0.5)
+}
+
+.submitbtn {
+    background-color: rgba(206, 206, 206, 0.6);
+    border: 0px;
+    font-size: 34px;
+    cursor: pointer;
+    font-weight: bolder;
+    border-radius: 8px;
+    letter-spacing: 3px;
+    color: #5b305a;
+    text-shadow: #e04b5a 2px 2px;
+}
+
+.submitbtn:hover {
+    color: #5b305a;
+}
+
+@-webkit-keyframes pulse-on-hover {
+    to {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        text-shadow: #e04b5a 3px 3px;
+
+    }
+}
+
+@keyframes pulse-on-hover {
+    to {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        text-shadow: #e04b5a 3px 3px;
+        
+    }
+}
+
+.pulse-on-hover:hover, .pulse-on-hover:focus, .pulse-on-hover:active {
+    -webkit-animation-name: pulse-on-hover;
+    animation-name: pulse-on-hover;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+  }
