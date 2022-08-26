@@ -30,21 +30,53 @@ const Player = (name, value) => {
 };
 
 const displayController = (() => {
+  const players = document.querySelectorAll(".inputs");
+  const submitBtn = document.querySelector(".submitbtn");
+  const startScreen = document.querySelector(".start-screen");
+  const gameScreen = document.querySelector(".game-screen");
+  let player1;
+  let player2;
+
+  // helper function for fetching the players name and puts them in an array
+  const getPlayerNames = () => {
+    const nameArr = [];
+    players.forEach((name) => {
+      nameArr.push(name.value);
+    });
+    player1 = Player(nameArr[0], "X");
+    player2 = Player(nameArr[1], "O");
+  };
+
+  const submitPlayerNames = () => {
+    submitBtn.addEventListener("click", (e) => {
+      getPlayerNames();
+      if (player1.getName() === "" || player2.getName() === "") {
+        return;
+      }
+      e.preventDefault();
+
+      startScreen.classList.add("unactive");
+      submitBtn.classList.add("unactive");
+      gameScreen.classList.remove("unactive");
+    });
+  };
+
   // Populates the Gameboard with the correct values
   const populateGameboard = (div, x, y, value) => {
     div.textContent = value;
     Gameboard.setValue(x, y, value);
   };
 
-  return { populateGameboard };
+  return { populateGameboard, player1, player2, submitPlayerNames };
 })();
 
 const gameLogic = (() => {
   let playerP = document.querySelector(".player-turn");
   let valueP = document.querySelector(".player-value");
+  const player1 = displayController.player1;
+  const player2 = displayController.player2;
+
   const gameboard = Gameboard.getGameboard();
-  const player1 = Player("Frank", "X");
-  const player2 = Player("trym", "O");
 
   let gameValue = "X"; // value X will always start
   let player2Turn = false;
@@ -176,4 +208,6 @@ const winLogic = (() => {
   return { checkDiagonal, checkRows, checkColumns };
 })();
 
-gameLogic.selectTile();
+const gameController = (() => {
+  displayController.submitPlayerNames();
+})();

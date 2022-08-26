@@ -23,13 +23,6 @@ html {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.game-screen {
-    display: none;
-}
-
-.game-screen, .active {
-   
-}
 
 .game-tiles {
     display: grid;
@@ -40,7 +33,6 @@ html {
     justify-items: center;
     width: 450px;
     height: 450px;
-    display: none;
 }
 
 .tile {
@@ -151,6 +143,7 @@ html {
     color: #5b305a;
 }
 
+/* Logic for animating the button */
 @-webkit-keyframes pulse-on-hover {
     to {
         -webkit-transform: scale(1.1);
@@ -180,4 +173,14 @@ html {
     animation-iteration-count: infinite;
     -webkit-animation-direction: alternate;
     animation-direction: alternate;
+  }
+
+  /* End of logic for animating button  */
+
+  .unactive {
+    display: none;
+  }
+
+  .active {
+    display: block;
   }
