@@ -33,6 +33,7 @@ const displayController = (() => {
   // Populates the Gameboard with the correct values
   const populateGameboard = (div, x, y, value) => {
     div.textContent = value;
+    div.classList.add(`${value}`);
     Gameboard.setValue(x, y, value);
   };
 
@@ -42,8 +43,9 @@ const displayController = (() => {
 })();
 
 const gameLogic = (() => {
-  let playerP = document.querySelector(".player-turn");
-  let valueP = document.querySelector(".player-value");
+  const playerP = document.querySelector(".player-turn");
+  const valueP = document.querySelector(".player-value");
+  const playerT = document.querySelector(".players-turn");
 
   let player1 = Player("", "");
   let player2 = Player("", "");
@@ -84,6 +86,9 @@ const gameLogic = (() => {
       startScreen.classList.add("unactive");
       submitBtn.classList.add("unactive");
       gameScreen.classList.remove("unactive");
+      playerP.textContent = `${player1.getName()}'s turn:`;
+      valueP.textContent = player1.getValue();
+      playerT.classList.add("player-1");
     });
   };
 
@@ -113,19 +118,21 @@ const gameLogic = (() => {
   // Logic for switching turns
   const playerTurn = () => {
     if (player2Turn) {
-      playerP.textContent = `Player 1, ${player1.getName()}`;
+      playerP.textContent = `${player1.getName()}'s turn:`;
       valueP.textContent = player1.getValue();
+      playerT.classList.add("player-1");
       gameValue = player1.getValue();
       player2Turn = !player2Turn;
     } else {
-      playerP.textContent = `Player 2, ${player2.getName()}`;
+      playerP.textContent = `${player2.getName()}'s turn:`;
       valueP.textContent = player2.getValue();
+      playerT.classList.add("player-2");
       gameValue = player2.getValue();
       player2Turn = !player2Turn;
     }
   };
 
-  // logic for checking for who has won or if its a tie
+  // logic for checking for who has won or if its a tie and displays to screen
   const checkForWin = () => {
     if (numberOfRounds === 9) {
       console.log("Tie");

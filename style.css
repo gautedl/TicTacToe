@@ -57,6 +57,11 @@ html {
 .players-turn {
     display: flex;
     gap: 20px;
+    font-size: 28px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    letter-spacing: 2px;
 }
 
 .header {
@@ -76,16 +81,24 @@ html {
 
 }
 
-.player-1, .player-1 {
-    justify-content: center;
-}
 
-.player-1 > .name-value {
+
+.player-1{
     color: #e49756;
     text-shadow: #e04b5a 2px 2px;
 }
 
-.player-2 > .name-value {
+.X {
+    color: #e49756;
+    text-shadow: #e04b5a 3px 3px;
+}
+
+.O {
+    color: #9a4c68;
+    text-shadow: #e04b5a 3px 3px;
+}
+
+.player-2{
     color: #9a4c68;
     text-shadow: #e04b5a 2px 2px;
 }
