@@ -30,12 +30,36 @@ const Player = (name, value) => {
 };
 
 const displayController = (() => {
+  // Populates the Gameboard with the correct values
+  const populateGameboard = (div, x, y, value) => {
+    div.textContent = value;
+    Gameboard.setValue(x, y, value);
+  };
+
+  return {
+    populateGameboard,
+  };
+})();
+
+const gameLogic = (() => {
+  let playerP = document.querySelector(".player-turn");
+  let valueP = document.querySelector(".player-value");
+
+  let player1 = Player("", "");
+  let player2 = Player("", "");
+
+  const gameboard = Gameboard.getGameboard();
+
+  let gameValue = "X"; // value X will always start
+  let player2Turn = false;
+  let dataX;
+  let dataY;
+  let numberOfRounds = 0;
+
   const players = document.querySelectorAll(".inputs");
   const submitBtn = document.querySelector(".submitbtn");
   const startScreen = document.querySelector(".start-screen");
   const gameScreen = document.querySelector(".game-screen");
-  let player1;
-  let player2;
 
   // helper function for fetching the players name and puts them in an array
   const getPlayerNames = () => {
@@ -47,12 +71,14 @@ const displayController = (() => {
     player2 = Player(nameArr[1], "O");
   };
 
+  // Gets the players names from the inputs on button click
   const submitPlayerNames = () => {
     submitBtn.addEventListener("click", (e) => {
-      getPlayerNames();
+      getPlayerNames(player1, player2);
       if (player1.getName() === "" || player2.getName() === "") {
         return;
       }
+
       e.preventDefault();
 
       startScreen.classList.add("unactive");
@@ -60,29 +86,6 @@ const displayController = (() => {
       gameScreen.classList.remove("unactive");
     });
   };
-
-  // Populates the Gameboard with the correct values
-  const populateGameboard = (div, x, y, value) => {
-    div.textContent = value;
-    Gameboard.setValue(x, y, value);
-  };
-
-  return { populateGameboard, player1, player2, submitPlayerNames };
-})();
-
-const gameLogic = (() => {
-  let playerP = document.querySelector(".player-turn");
-  let valueP = document.querySelector(".player-value");
-  const player1 = displayController.player1;
-  const player2 = displayController.player2;
-
-  const gameboard = Gameboard.getGameboard();
-
-  let gameValue = "X"; // value X will always start
-  let player2Turn = false;
-  let dataX;
-  let dataY;
-  let numberOfRounds = 0;
 
   // Places the value of the player who's turn it is in the tile.
   const selectTile = () =>
@@ -122,7 +125,7 @@ const gameLogic = (() => {
     }
   };
 
-  // NEEDS LOGIC FOR FETCHING CORRECT PLAYER
+  // logic for checking for who has won or if its a tie
   const checkForWin = () => {
     if (numberOfRounds === 9) {
       console.log("Tie");
@@ -147,7 +150,7 @@ const gameLogic = (() => {
     }
   };
 
-  return { selectTile };
+  return { selectTile, submitPlayerNames };
 })();
 
 const winLogic = (() => {
@@ -208,6 +211,9 @@ const winLogic = (() => {
   return { checkDiagonal, checkRows, checkColumns };
 })();
 
+// Functions for making the game playable
 const gameController = (() => {
-  displayController.submitPlayerNames();
+  gameLogic.submitPlayerNames();
+
+  gameLogic.selectTile();
 })();
