@@ -62,6 +62,10 @@ const gameLogic = (() => {
   const submitBtn = document.querySelector(".submitbtn");
   const startScreen = document.querySelector(".start-screen");
   const gameScreen = document.querySelector(".game-screen");
+  const winningScreen = document.querySelector(".winning-screen-container");
+  const winningName = document.querySelector(".winning-name");
+  const winningValue = document.querySelector(".winning-value");
+  const winnerTitle = document.querySelector(".winner-title");
 
   // helper function for fetching the players name and puts them in an array
   const getPlayerNames = () => {
@@ -120,12 +124,14 @@ const gameLogic = (() => {
     if (player2Turn) {
       playerP.textContent = `${player1.getName()}'s turn:`;
       valueP.textContent = player1.getValue();
+      playerT.classList.remove("player-2");
       playerT.classList.add("player-1");
       gameValue = player1.getValue();
       player2Turn = !player2Turn;
     } else {
       playerP.textContent = `${player2.getName()}'s turn:`;
       valueP.textContent = player2.getValue();
+      playerT.classList.remove("player-1");
       playerT.classList.add("player-2");
       gameValue = player2.getValue();
       player2Turn = !player2Turn;
@@ -135,25 +141,37 @@ const gameLogic = (() => {
   // logic for checking for who has won or if its a tie and displays to screen
   const checkForWin = () => {
     if (numberOfRounds === 9) {
-      console.log("Tie");
+      gameScreen.classList.add("unactive");
+      winningScreen.classList.remove("unactive");
+      winningName.textContent = "Tie";
+      winningName.classList.add("winner-title-tie");
+      winningValue.textContent = ":(";
+      winningValue.classList.add(`winner-title-tie`);
+      winnerTitle.textContent = "";
     }
 
-    if (winLogic.checkDiagonal() === "X") {
-      console.log(player1.getName());
-    } else if (winLogic.checkDiagonal() === "O") {
-      console.log(player2.getName());
-    }
-
-    if (winLogic.checkRows() === "X") {
-      console.log(player1.getName());
-    } else if (winLogic.checkRows() === "O") {
-      console.log(player2.getName());
-    }
-
-    if (winLogic.checkColumns() === "X") {
-      console.log(player1.getName());
-    } else if (winLogic.checkColumns() === "O") {
-      console.log(player2.getName());
+    if (
+      winLogic.checkRows() === "X" ||
+      winLogic.checkColumns() === "X" ||
+      winLogic.checkDiagonal() === "X"
+    ) {
+      gameScreen.classList.add("unactive");
+      winningScreen.classList.remove("unactive");
+      winningName.textContent = player1.getName();
+      winningName.classList.add(`${player1.getValue()}`);
+      winningValue.textContent = player1.getValue();
+      winningValue.classList.add(`${player1.getValue()}`);
+    } else if (
+      winLogic.checkRows() === "O" ||
+      winLogic.checkDiagonal() === "O" ||
+      winLogic.checkColumns() === "O"
+    ) {
+      gameScreen.classList.add("unactive");
+      winningScreen.classList.remove("unactive");
+      winningName.textContent = player2.getName();
+      winningName.classList.add("player-2");
+      winningValue.textContent = player2.getValue();
+      winningValue.classList.add(`${player2.getValue()}`);
     }
   };
 

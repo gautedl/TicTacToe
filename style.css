@@ -65,11 +65,12 @@ html {
 }
 
 .header {
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bolder;
     color: #5b305a;
     text-shadow: #e04b5a 4px 4px;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
+    margin-top: 0px;
 }
 
 
@@ -140,7 +141,7 @@ html {
     background-color:rgba(224, 75, 90, 0.5)
 }
 
-.submitbtn {
+.submitbtn, .rematch, .new-game {
     background-color: rgba(206, 206, 206, 0.6);
     border: 0px;
     font-size: 34px;
@@ -150,6 +151,14 @@ html {
     letter-spacing: 3px;
     color: #5b305a;
     text-shadow: #e04b5a 2px 2px;
+}
+
+.rematch {
+    color: #e49756;
+}
+
+.new-game {
+    color: #9a4c68;
 }
 
 .submitbtn:hover {
@@ -196,4 +205,49 @@ html {
 
   .active {
     display: block;
+  }
+
+  .winning-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 100%;
+    margin-bottom: 100px;
+  }
+
+  .winner-container {
+    margin: 20px 0px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    font-size: 60px;
+    font-weight: bolder;
+    letter-spacing: 3px;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .winner-title {
+    font-size: 35px;
+    font-weight: bolder;
+    color: #5b305a;
+    text-shadow: #e04b5a 2px 2px;
+    letter-spacing: 2px;
+    margin-top: 0;
+  }
+
+  .winner-title-tie {
+    font-size: 50px;
+    font-weight: bolder;
+    color: #5b305a;
+    text-shadow: #e04b5a 2px 2px;
+    letter-spacing: 2px;
+    margin-top: 0;
   }
