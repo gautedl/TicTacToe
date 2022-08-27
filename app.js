@@ -30,6 +30,49 @@ const Player = (name, value) => {
 };
 
 const displayController = (() => {
+  const winningScreen = document.querySelector(".winning-screen-container");
+  const winningName = document.querySelector(".winning-name");
+  const winningValue = document.querySelector(".winning-value");
+  const winnerTitle = document.querySelector(".winner-title");
+  const gameScreen = document.querySelector(".game-screen");
+  const rematchBtn = document.querySelector(".rematch");
+  const newGameBtn = document.querySelector(".new-game");
+  const tiles = document.querySelectorAll(".tile");
+
+  const rematch = () => {
+    rematchBtn.addEventListener("click", () => {
+      tiles.forEach((item) => (item.textContent = ""));
+      Gameboard.resetGameboard();
+      winningScreen.classList.add("unactive");
+      gameScreen.classList.remove("unactive");
+    });
+  };
+
+  const newGame = () => {
+    newGameBtn.addEventListener("click", () => {});
+  };
+
+  // Populates the winning screen with the players name and value
+  const showWinningScreen = (player) => {
+    gameScreen.classList.add("unactive");
+    winningScreen.classList.remove("unactive");
+    winningName.textContent = player.getName();
+    winningName.classList.add(`${player.getValue()}`);
+    winningValue.textContent = player.getValue();
+    winningValue.classList.add(`${player.getValue()}`);
+  };
+
+  // Populates the winning screen if it's a tie
+  const showTieScreen = () => {
+    gameScreen.classList.add("unactive");
+    winningScreen.classList.remove("unactive");
+    winningName.textContent = "Tie";
+    winningName.classList.add("winner-title-tie");
+    winningValue.textContent = ":(";
+    winningValue.classList.add(`winner-title-tie`);
+    winnerTitle.textContent = "";
+  };
+
   // Populates the Gameboard with the correct values
   const populateGameboard = (div, x, y, value) => {
     div.textContent = value;
@@ -39,6 +82,10 @@ const displayController = (() => {
 
   return {
     populateGameboard,
+    showWinningScreen,
+    showTieScreen,
+    rematch,
+    newGame,
   };
 })();
 
@@ -50,7 +97,7 @@ const gameLogic = (() => {
   let player1 = Player("", "");
   let player2 = Player("", "");
 
-  const gameboard = Gameboard.getGameboard();
+  Gameboard.getGameboard();
 
   let gameValue = "X"; // value X will always start
   let player2Turn = false;
@@ -62,10 +109,6 @@ const gameLogic = (() => {
   const submitBtn = document.querySelector(".submitbtn");
   const startScreen = document.querySelector(".start-screen");
   const gameScreen = document.querySelector(".game-screen");
-  const winningScreen = document.querySelector(".winning-screen-container");
-  const winningName = document.querySelector(".winning-name");
-  const winningValue = document.querySelector(".winning-value");
-  const winnerTitle = document.querySelector(".winner-title");
 
   // helper function for fetching the players name and puts them in an array
   const getPlayerNames = () => {
@@ -105,8 +148,8 @@ const gameLogic = (() => {
 
         // Checks if the tile is already marked
         if (
-          gameboard[dataX][dataY] === "X" ||
-          gameboard[dataX][dataY] === "O"
+          Gameboard.getGameboard()[dataX][dataY] === "X" ||
+          Gameboard.getGameboard()[dataX][dataY] === "O"
         ) {
           return;
         } else {
@@ -141,13 +184,8 @@ const gameLogic = (() => {
   // logic for checking for who has won or if its a tie and displays to screen
   const checkForWin = () => {
     if (numberOfRounds === 9) {
-      gameScreen.classList.add("unactive");
-      winningScreen.classList.remove("unactive");
-      winningName.textContent = "Tie";
-      winningName.classList.add("winner-title-tie");
-      winningValue.textContent = ":(";
-      winningValue.classList.add(`winner-title-tie`);
-      winnerTitle.textContent = "";
+      displayController.showTieScreen();
+      numberOfRounds = 0;
     }
 
     if (
@@ -155,23 +193,15 @@ const gameLogic = (() => {
       winLogic.checkColumns() === "X" ||
       winLogic.checkDiagonal() === "X"
     ) {
-      gameScreen.classList.add("unactive");
-      winningScreen.classList.remove("unactive");
-      winningName.textContent = player1.getName();
-      winningName.classList.add(`${player1.getValue()}`);
-      winningValue.textContent = player1.getValue();
-      winningValue.classList.add(`${player1.getValue()}`);
+      displayController.showWinningScreen(player1);
+      numberOfRounds = 0;
     } else if (
       winLogic.checkRows() === "O" ||
       winLogic.checkDiagonal() === "O" ||
       winLogic.checkColumns() === "O"
     ) {
-      gameScreen.classList.add("unactive");
-      winningScreen.classList.remove("unactive");
-      winningName.textContent = player2.getName();
-      winningName.classList.add("player-2");
-      winningValue.textContent = player2.getValue();
-      winningValue.classList.add(`${player2.getValue()}`);
+      displayController.showWinningScreen(player2);
+      numberOfRounds = 0;
     }
   };
 
@@ -179,12 +209,20 @@ const gameLogic = (() => {
 })();
 
 const winLogic = (() => {
-  const gameboard = Gameboard.getGameboard();
+  Gameboard.getGameboard();
 
   // Checks if diagonal has winning conditions
   const checkDiagonal = () => {
-    const diagonal1 = [gameboard[0][0], gameboard[1][1], gameboard[2][2]];
-    const diagonal2 = [gameboard[0][2], gameboard[1][1], gameboard[2][0]];
+    const diagonal1 = [
+      Gameboard.getGameboard()[0][0],
+      Gameboard.getGameboard()[1][1],
+      Gameboard.getGameboard()[2][2],
+    ];
+    const diagonal2 = [
+      Gameboard.getGameboard()[0][2],
+      Gameboard.getGameboard()[1][1],
+      Gameboard.getGameboard()[2][0],
+    ];
     if (
       diagonal1.every((tile) => tile === "X") ||
       diagonal2.every((tile) => tile === "X")
@@ -201,9 +239,9 @@ const winLogic = (() => {
   // checks if Rows has winning conditions
   const checkRows = () => {
     for (let i = 0; i < 3; i++) {
-      if (gameboard[i].every((tile) => tile === "X")) {
+      if (Gameboard.getGameboard()[i].every((tile) => tile === "X")) {
         return "X";
-      } else if (gameboard[i].every((tile) => tile === "O")) {
+      } else if (Gameboard.getGameboard()[i].every((tile) => tile === "O")) {
         return "O";
       }
     }
@@ -211,7 +249,7 @@ const winLogic = (() => {
 
   // Checks if columns has winning conditions by cjecking rows on a transposed gameboard
   const checkColumns = () => {
-    const transposedGameboard = transpose(gameboard);
+    const transposedGameboard = transpose(Gameboard.getGameboard());
 
     for (let i = 0; i < 3; i++) {
       if (transposedGameboard[i].every((tile) => tile === "X")) {
@@ -239,6 +277,6 @@ const winLogic = (() => {
 // Functions for making the game playable
 const gameController = (() => {
   gameLogic.submitPlayerNames();
-
   gameLogic.selectTile();
+  displayController.rematch();
 })();
