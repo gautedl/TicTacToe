@@ -58,6 +58,9 @@ const displayController = (() => {
       cleanUpBoard();
       winningScreen.classList.add("unactive");
       gameScreen.classList.remove("unactive");
+      winningName.classList = "";
+
+      winningValue.classList = "";
       gameLogic.startNewGame();
     });
   };
@@ -70,6 +73,9 @@ const displayController = (() => {
 
       winningScreen.classList.add("unactive");
       startScreen.classList.remove("unactive");
+      winningName.classList = "";
+
+      winningValue.classList = "";
       gameLogic.startNewGame();
     });
   };
