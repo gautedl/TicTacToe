@@ -17,6 +17,8 @@ html {
     height: 700px;
 }
 
+
+
 .game-board {
     width: 450px;
     height: 450px;
@@ -70,7 +72,7 @@ html {
     color: #5b305a;
     text-shadow: #e04b5a 4px 4px;
     letter-spacing: 6px;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 

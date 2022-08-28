@@ -38,18 +38,35 @@ const displayController = (() => {
   const rematchBtn = document.querySelector(".rematch");
   const newGameBtn = document.querySelector(".new-game");
   const tiles = document.querySelectorAll(".tile");
+  const startScreen = document.querySelector(".start-screen");
+  const inputNames = document.querySelectorAll(".inputs");
 
+  // cleans the gameboard
+  const cleanUpBoard = () => {
+    tiles.forEach((item) => (item.textContent = ""));
+    Gameboard.resetGameboard();
+  };
+
+  // Starts a rematch between the two players
   const rematch = () => {
     rematchBtn.addEventListener("click", () => {
-      tiles.forEach((item) => (item.textContent = ""));
-      Gameboard.resetGameboard();
+      cleanUpBoard();
       winningScreen.classList.add("unactive");
       gameScreen.classList.remove("unactive");
+      gameLogic.startNewGame();
     });
   };
 
+  // Starts a new game with new players
   const newGame = () => {
-    newGameBtn.addEventListener("click", () => {});
+    newGameBtn.addEventListener("click", () => {
+      cleanUpBoard();
+      inputNames.forEach((item) => (item.value = ""));
+
+      winningScreen.classList.add("unactive");
+      startScreen.classList.remove("unactive");
+      gameLogic.startNewGame();
+    });
   };
 
   // Populates the winning screen with the players name and value
@@ -131,12 +148,21 @@ const gameLogic = (() => {
       e.preventDefault();
 
       startScreen.classList.add("unactive");
-      submitBtn.classList.add("unactive");
       gameScreen.classList.remove("unactive");
       playerP.textContent = `${player1.getName()}'s turn:`;
       valueP.textContent = player1.getValue();
       playerT.classList.add("player-1");
     });
+  };
+
+  // Resets correct values on starting new game or rematch
+  const startNewGame = () => {
+    gameValue = "X";
+    player2Turn = false;
+    playerP.textContent = `${player1.getName()}'s turn:`;
+    valueP.textContent = player1.getValue();
+    playerT.classList.remove("player-2");
+    playerT.classList.add("player-1");
   };
 
   // Places the value of the player who's turn it is in the tile.
@@ -205,7 +231,7 @@ const gameLogic = (() => {
     }
   };
 
-  return { selectTile, submitPlayerNames };
+  return { selectTile, submitPlayerNames, startNewGame };
 })();
 
 const winLogic = (() => {
@@ -279,4 +305,5 @@ const gameController = (() => {
   gameLogic.submitPlayerNames();
   gameLogic.selectTile();
   displayController.rematch();
+  displayController.newGame();
 })();
