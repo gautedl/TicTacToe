@@ -43,7 +43,12 @@ const displayController = (() => {
 
   // cleans the gameboard
   const cleanUpBoard = () => {
-    tiles.forEach((item) => (item.textContent = ""));
+    tiles.forEach((item) => {
+      item.textContent = "";
+      item.classList.add("tile-hover");
+      item.classList.remove("X");
+      item.classList.remove("O");
+    });
     Gameboard.resetGameboard();
   };
 
@@ -73,10 +78,12 @@ const displayController = (() => {
   const showWinningScreen = (player) => {
     gameScreen.classList.add("unactive");
     winningScreen.classList.remove("unactive");
+    winningScreen.classList.add("blur");
     winningName.textContent = player.getName();
     winningName.classList.add(`${player.getValue()}`);
     winningValue.textContent = player.getValue();
     winningValue.classList.add(`${player.getValue()}`);
+    winningValue.classList.add(`win`);
   };
 
   // Populates the winning screen if it's a tie
@@ -94,6 +101,7 @@ const displayController = (() => {
   const populateGameboard = (div, x, y, value) => {
     div.textContent = value;
     div.classList.add(`${value}`);
+    div.classList.remove("tile-hover");
     Gameboard.setValue(x, y, value);
   };
 

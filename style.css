@@ -15,6 +15,11 @@ html {
     background-color: rgba(0, 0, 0, 0.2);
     width: 800px;
     height: 700px;
+    border-top:#5b305a 8px solid;
+    border-bottom:#5b305a 8px solid;
+    border-left: #e04b5a 8px solid;
+    border-right: #e04b5a 8px solid;
+    box-shadow: inset 0px 0px 5px black;
 }
 
 
@@ -49,7 +54,7 @@ html {
     transition: 0.3s;
 }
 
-.tile:hover {
+.tile-hover:hover {
     cursor: pointer;
     background-color: rgba(189, 189, 189, 0.774);
 }
@@ -72,7 +77,7 @@ html {
     color: #5b305a;
     text-shadow: #e04b5a 4px 4px;
     letter-spacing: 6px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 
@@ -217,6 +222,80 @@ html {
     height: 80%;
     width: 100%;
     margin-bottom: 100px;
+  }
+
+  .winning-value {
+    font-size: 100px;
+  }
+
+  @-webkit-keyframes win {
+    from {
+        -webkit-transform: scale(5);
+        transform: scale(5);
+        opacity: 50%;
+        filter: blur(10px);
+    }
+    to {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 100%;
+        filter: blur(0);
+    }
+  }
+
+  @keyframes win {
+    from {
+        -webkit-transform: scale(5);
+        transform: scale(5);
+        opacity: 50%;
+        filter: blur(10px);
+    }
+    to {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 100%;
+        filter: blur(0);
+    }
+  }
+
+  .win {
+    -webkit-animation-name: win;
+    animation-name: win;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease; 
+  }
+
+  @-webkit-keyframes blur {
+    from {
+        opacity: 50%;
+        filter: blur(10px);
+    }
+    to {
+        opacity: 100%;
+        filter: blur(0);
+    }
+  }
+
+  @keyframes blur {
+    from {
+        opacity: 50%;
+        filter: blur(10px);
+    }
+    to {
+        opacity: 100%;
+        filter: blur(0);
+    }
+  }
+
+  .blur {
+    -webkit-animation-name: blur;
+    animation-name: blur;
+    -webkit-animation-duration: 1.2s;
+    animation-duration: 1.2s;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease; 
   }
 
   .winner-container {
